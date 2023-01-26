@@ -1,14 +1,26 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React from "react";
 import ToDo from "./ToDo";
 import { useState, useEffect } from "react";
 
 const TodoList = () => {
   const [opencount, countOpenTodos] = useState(0);
-  const [todos, setTodos] = useState([
-    { description: "Einkaufen", done: true },
-    { description: "Sport", done: false },
-    { description: "Programmieren", done: false },
-  ]);
+  const [todos, setTodos] = useState(() => {
+    const items = localStorage.getItem("items");
+    const parsed = JSON.parse(items);
+    return parsed || [];
+  });
+  const [textInput, settTextInput] = useState("");
+
+  const changeText = (e) => {
+    settTextInput(e.target.value);
+  };
+
+  const submit = (e) => {
+    e.preventDefault();
+    const newTodos = [...todos, { description: textInput, done: false }];
+    setTodos(newTodos);
+  };
 
   const countOpen = () => {
     const doneTodos = todos.filter((item) => {
@@ -36,7 +48,8 @@ const TodoList = () => {
 
   useEffect(() => {
     countOpen();
-  }, [todos]);
+    localStorage.setItem("items", JSON.stringify(todos));
+  }, [todos, countOpen]);
 
   return (
     <div className="shadow-sm hover:shadow-lg">
@@ -46,13 +59,15 @@ const TodoList = () => {
         <form className="grid grid-cols-3 py2">
           <input
             type="text"
+            onChange={changeText}
             placeholder="New ToDo..."
-            className="col-span-2 py-2"
+            className="col-span-2 py-2 text-gray-900"
           ></input>
           <input
+            onClick={submit}
             type="submit"
             value="Add Todo"
-            className="col-span-1 text-gray-900"
+            className="col-span-1 text-gray-900 bg-gray-200 cursor-pointer"
           ></input>
         </form>
       </div>

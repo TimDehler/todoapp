@@ -1,6 +1,8 @@
 import React from "react";
 
 function ToDo({ description, done, onChangeTodo, onClickDeleteTodo, index }) {
+  let style = "flex justify-between p-2 items-center bg-green-600 text-white";
+
   return (
     <div>
       <div
