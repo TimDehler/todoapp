@@ -1,10 +1,9 @@
-import logo from "./logo.svg";
-import "./App.css";
+import TodoList from "./components/TodoList";
 
 function App() {
   return (
-    <div className="text-3xl font-bold underline">
-      <h1>Hello World!</h1>
+    <div className="max-w-xl m-auto bg-gray-200 mt-20">
+      <TodoList />
     </div>
   );
 }
