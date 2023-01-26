@@ -20,6 +20,7 @@ const TodoList = () => {
     e.preventDefault();
     const newTodos = [...todos, { description: textInput, done: false }];
     setTodos(newTodos);
+    settTextInput("");
   };
 
   const countOpen = () => {
@@ -40,7 +41,6 @@ const TodoList = () => {
   };
 
   const deleteTodo = (index) => {
-    console.log("Was called");
     const newTodos = [...todos];
     newTodos.splice(index, 1);
     setTodos(newTodos);
@@ -60,6 +60,7 @@ const TodoList = () => {
           <input
             type="text"
             onChange={changeText}
+            value={textInput}
             placeholder="New ToDo..."
             className="col-span-2 py-2 text-gray-900"
           ></input>
